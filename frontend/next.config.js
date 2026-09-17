@@ -11,10 +11,22 @@ const nextConfig = {
   },
   reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_REVERB_APP_KEY: process.env.REVERB_APP_KEY,
-    NEXT_PUBLIC_REVERB_HOST: process.env.REVERB_HOST,
-    NEXT_PUBLIC_REVERB_PORT: process.env.REVERB_PORT,
-    NEXT_PUBLIC_REVERB_SCHEME: process.env.REVERB_SCHEME,
+    NEXT_PUBLIC_REVERB_APP_KEY:
+      process.env.NEXT_PUBLIC_REVERB_APP_KEY ||
+      process.env.REVERB_APP_KEY ||
+      "",
+    NEXT_PUBLIC_REVERB_HOST:
+      process.env.NEXT_PUBLIC_REVERB_HOST ||
+      process.env.REVERB_HOST ||
+      "localhost",
+    NEXT_PUBLIC_REVERB_PORT:
+      process.env.NEXT_PUBLIC_REVERB_PORT ||
+      process.env.REVERB_PORT ||
+      "8080",
+    NEXT_PUBLIC_REVERB_SCHEME:
+      process.env.NEXT_PUBLIC_REVERB_SCHEME ||
+      process.env.REVERB_SCHEME ||
+      "http",
   },
 };
 
