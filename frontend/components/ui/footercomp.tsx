@@ -2,8 +2,7 @@
 
 import Copyright from "./copyright";
 
-const FooterComp = () => {
-  console.log("Current image path:", '/Footer.png'); 
+const FooterComp = () => { 
 
   return (
     <footer

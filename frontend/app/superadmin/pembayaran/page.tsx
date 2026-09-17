@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePaymentManagement } from "./hooks/usePaymentManagement";
 import { usePaymentFilters } from "./hooks/usePaymentFilters";
 import {
@@ -59,9 +59,9 @@ const PaymentManagementPage = () => {
   const [isFullRefund, setIsFullRefund] = useState(true);
 
   // Fetch stats when page loads
-  useState(() => {
+  useEffect(() => {
     fetchStats();
-  });
+  }, [fetchStats]);
 
   // Handle status update
   const handleUpdateStatus = async () => {
