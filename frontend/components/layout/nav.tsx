@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import Searchbar from "../ui/searchbar";
 import { useRouter } from "next/navigation";
 import ProfileCardNav from "../common/profile-card-nav";
@@ -9,38 +8,13 @@ import axios from "../../lib/axios"; // CHANGE: Use the configured axios instanc
 import { motion, AnimatePresence } from "framer-motion";
 import echo from "../../app/(root)/chat/libs/echo";
 
-const MenuIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <path
-      d="M3 12H21"
-      stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M3 5H21"
-      stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M3 19H21"
-      stroke="white"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+export interface NotificationItem {
+  id_notifikasi: number;
+  tipe_notifikasi: string;
+  isi_notifikasi: string;
+  created_at: string;
+  is_read: boolean;
+}
 
 const NotificationIcon = ({ hasUnread }: { hasUnread: boolean }) => (
   <motion.div
@@ -78,7 +52,7 @@ const NotificationPopup = ({
   onMarkAsRead,
   onMarkAllAsRead,
 }: {
-  notifications: any[];
+  notifications: NotificationItem[];
   isOpen: boolean;
   onClose: () => void;
   onMarkAsRead: (id: number) => void;
@@ -95,14 +69,25 @@ const NotificationPopup = ({
       >
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
           <h3 className="font-semibold text-gray-900">Notifikasi</h3>
-          {notifications.length > 0 && (
+          <div className="flex items-center gap-3">
+            {notifications.length > 0 && (
+              <button
+                type="button"
+                onClick={onMarkAllAsRead}
+                className="text-xs text-amber-600 hover:text-amber-700"
+              >
+                Tandai semua dibaca
+              </button>
+            )}
             <button
-              onClick={onMarkAllAsRead}
-              className="text-xs text-amber-600 hover:text-amber-700"
+              type="button"
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 text-sm font-semibold"
+              aria-label="Tutup notifikasi"
             >
-              Tandai semua dibaca
+              ✕
             </button>
-          )}
+          </div>
         </div>
 
         <div className="max-h-64 overflow-y-auto">
@@ -186,7 +171,7 @@ const CartIcon = () => (
 const Navigation = () => {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean | null>(null);
-  const [notifications, setNotifications] = React.useState<any[]>([]);
+  const [notifications, setNotifications] = React.useState<NotificationItem[]>([]);
   const [unreadCount, setUnreadCount] = React.useState(0);
   const [showNotifications, setShowNotifications] = React.useState(false);
   const [userId, setUserId] = React.useState<number | null>(null);
@@ -229,7 +214,7 @@ const Navigation = () => {
 
     const channel = echo.private(channelName);
 
-    channel.listen(".NotificationReceived", (data: any) => {
+    channel.listen(".NotificationReceived", (data: NotificationItem) => {
       console.log("📨 New notification received:", data);
 
       // Add to notifications list
@@ -249,7 +234,7 @@ const Navigation = () => {
       }, 2000);
     });
 
-    channel.error((error: any) => {
+    channel.error((error: unknown) => {
       console.error("❌ Notification subscription error:", error);
     });
 
@@ -316,7 +301,7 @@ const Navigation = () => {
     }
   };
 
-  const showToastNotification = (notification: any) => {
+  const showToastNotification = (notification: NotificationItem) => {
     // Create a simple toast notification
     console.log("🔔 Toast notification:", notification.isi_notifikasi);
 
