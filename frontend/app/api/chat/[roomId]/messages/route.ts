@@ -4,10 +4,10 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { roomId: string } }
+  { params }: { params: Promise<{ roomId: string }> }
 ) {
   try {
-    const { roomId } = params;
+    const { roomId } = await params;
 
     console.log(`Fetching messages for room: ${roomId}`);
 
@@ -60,10 +60,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { roomId: string } }
+  { params }: { params: Promise<{ roomId: string }> }
 ) {
   try {
-    const { roomId } = params;
+    const { roomId } = await params;
     const body = await request.json();
 
     console.log(`Sending message to room: ${roomId}`, body);

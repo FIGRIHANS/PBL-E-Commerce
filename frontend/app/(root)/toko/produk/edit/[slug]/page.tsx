@@ -4,12 +4,11 @@ import React from "react";
 import BarangForm from "./components/BarangForm";
 import { BarangFormHeader } from "./components/BarangFormHeader";
 import useBarangForm from "./hooks/useBarangForm";
+import { useParams } from "next/navigation";
 
-export default function EditBarangPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function EditBarangPage() {
+  const params = useParams();
+  const slug = (params?.slug as string) || "";
   const {
     formData,
     imageFiles,
@@ -23,7 +22,7 @@ export default function EditBarangPage({
     handleRemoveImage,
     setPrimaryImage,
     handleSubmit,
-  } = useBarangForm(params.slug);
+  } = useBarangForm(slug);
 
   return (
     <div className="container mx-auto">

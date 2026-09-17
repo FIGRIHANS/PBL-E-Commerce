@@ -4,12 +4,11 @@ import { EditAddressForm } from "./components/EditAddressForm";
 import { AddressHeader } from "../../components/AddressHeader";
 import { EditAddressSkeleton } from "./components/EditAddressSkeleton";
 import { useEditAddress } from "./hooks/useEditAddress";
+import { useParams } from "next/navigation";
 
-export default function EditAddressPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function EditAddressPage() {
+  const params = useParams();
+  const id = (params?.id as string) || "";
   const {
     formData,
     loading,
@@ -26,7 +25,7 @@ export default function EditAddressPage({
     handleCheckboxChange,
     handleSubmit,
     handleCancel,
-  } = useEditAddress(params.id);
+  } = useEditAddress(id);
 
   if (loadingData) {
     return <EditAddressSkeleton />;

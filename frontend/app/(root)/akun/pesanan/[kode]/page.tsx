@@ -20,11 +20,6 @@ import { ReviewDetails } from "./components/ReviewDetails";
 import { KomplainForm } from "./components/KomplainForm";
 import { KomplainDetails } from "./components/KomplainDetails";
 
-import { getCsrfToken } from "@/lib/axios";
-import { toast } from "sonner";
-
-interface OrderDetailPageProps {}
-
 export default function OrderDetailPage() {
   const params = useParams();
   const kode = (params?.kode ?? "") as string;

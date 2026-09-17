@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { motion } from "framer-motion";
 import { useCatalog } from "./hooks/useCatalog";
 import { useBuyNow } from "./hooks/useBuyNow";
@@ -9,7 +10,7 @@ import { ProductGrid } from "./components/ProductGrid";
 import { Pagination } from "./components/Pagination";
 import { Package, Sparkles } from "lucide-react";
 
-export default function KatalogPage() {
+function KatalogPageContent() {
   const {
     products,
     categories,
@@ -151,5 +152,13 @@ export default function KatalogPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function KatalogPage() {
+  return (
+    <Suspense>
+      <KatalogPageContent />
+    </Suspense>
   );
 }

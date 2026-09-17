@@ -36,14 +36,9 @@ interface OrderDetailType extends OrderDetail {
   komplain?: any; // Adjust 'any' to your actual Komplain type
 }
 
-interface PageProps {
-  params: {
-    kode: string;
-  };
-}
-
-export default function OrderDetailPage({ params }: PageProps) {
-  const { kode } = params;
+export default function OrderDetailPage() {
+  const params = useParams();
+  const kode = (params?.kode as string) || "";
   const {
     order,
     loading,

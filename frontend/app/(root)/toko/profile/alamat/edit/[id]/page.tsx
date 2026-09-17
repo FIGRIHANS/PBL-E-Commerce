@@ -1,20 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEditAddressForm } from "./hooks/useEditAddressForm";
 import { EditAddressHeader } from "./components/EditAddressHeader";
 import { EditFormCard } from "./components/EditFormCard";
 import { LoadingSkeleton } from "./components/LoadingSkeleton";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function EditAddressPage({ params }: PageProps) {
+export default function EditAddressPage() {
   const router = useRouter();
-  const { id } = params;
+  const params = useParams();
+  const id = (params?.id as string) || "";
 
   const {
     formData,

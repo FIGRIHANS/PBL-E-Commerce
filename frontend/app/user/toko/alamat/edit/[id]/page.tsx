@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axiosInstance, { getCsrfToken } from "@/lib/axios";
 import {
   Card,
@@ -59,15 +59,10 @@ interface FormData {
   is_primary: boolean;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const EditStoreAddressForm = ({ params }: PageProps) => {
+const EditStoreAddressForm = () => {
   const router = useRouter();
-  const { id } = params;
+  const params = useParams();
+  const id = (params?.id as string) || "";
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { useCheckout } from "./hooks/useCheckout";
 import { StoreCheckoutCard } from "./components/StoreCheckoutCard";
@@ -9,7 +10,7 @@ import { ShippingMethodCard } from "./components/ShippingMethodCard";
 import { StoreNotesCard } from "./components/StoreNotesCard";
 import { StoreTotalCard } from "./components/StoreTotalCard";
 
-export default function Checkout() {
+function CheckoutContent() {
   const {
     loading,
     processingCheckout,
@@ -86,5 +87,20 @@ export default function Checkout() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Checkout() {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto py-12 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading checkout details...</span>
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 
-export default function SearchPayment() {
+function SearchPaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderCode = searchParams.get("order");
@@ -147,5 +147,13 @@ export default function SearchPayment() {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function SearchPayment() {
+  return (
+    <Suspense>
+      <SearchPaymentContent />
+    </Suspense>
   );
 }

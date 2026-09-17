@@ -2,7 +2,7 @@
 
 import ChatRoom from "./components/ChatRoom";
 import { ChatRoomList } from "./components/ChatRoomList";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getCurrentUser } from "../../../lib/auth";
 import axios from "../../../lib/axios";
@@ -294,4 +294,10 @@ function ChatPage() {
   );
 }
 
-export default ChatPage;
+export default function ChatPageWrapper() {
+  return (
+    <Suspense fallback={<ChatRoomSkeleton />}>
+      <ChatPage />
+    </Suspense>
+  );
+}

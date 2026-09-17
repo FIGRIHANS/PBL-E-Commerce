@@ -4,10 +4,10 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { roomId: string } }
+  { params }: { params: Promise<{ roomId: string }> }
 ) {
   try {
-    const { roomId } = params;
+    const { roomId } = await params;
 
     console.log(`Fetching chat room: ${roomId}`);
 
